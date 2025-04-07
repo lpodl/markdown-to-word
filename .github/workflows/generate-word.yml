@@ -1,0 +1,34 @@
+name: Generate Word Document
+
+on:
+  push:
+    paths:
+      - 'docs/**.md'
+  pull_request:
+    paths:
+      - 'docs/**.md'
+  workflow_dispatch:
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+        
+      - name: Convert Markdown to Word
+        run: |
+          mkdir -p output
+          for file in docs/*.md; do
+            filename=$(basename "$file" .md)
+            echo "Converting $file to output/${filename}.docx"
+            pandoc -f markdown -t docx -o "output/${filename}.docx" "$file"
+          done
+      
+      - name: Upload Word Documents
+        uses: actions/upload-artifact@v3
+        with:
+          name: word-documents
+          path: output/*.docx
