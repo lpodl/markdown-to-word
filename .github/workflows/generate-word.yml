@@ -16,8 +16,10 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Setup Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
-        
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+      
       - name: Convert Markdown to Word
         run: |
           mkdir -p output
@@ -28,7 +30,7 @@ jobs:
           done
       
       - name: Upload Word Documents
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: word-documents
           path: output/*.docx
