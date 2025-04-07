@@ -24,7 +24,7 @@ We use binary variables $x_{i,j,p}$ where:
 
 ### Objective Function
 
-The objective is to minimize the total distance traveled:
+The objective is to minimize the total distance traveled
 
 $$\min \sum_{i=1}^N \sum_{j=1}^N \sum_{p=1}^N d_{ij} \cdot x_{i,j,p}$$
 
